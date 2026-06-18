@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: transparent;
+      color: #222;
+    }
 
+    .wrap {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px 16px;
+      min-width: 150px;
+      text-align: center;
+    }
+
+    .city {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .time {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .date {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="city">Perth</div>
+      <div class="time" id="perth-time"></div>
+      <div class="date" id="perth-date"></div>
+    </div>
+
+    <div class="card">
+      <div class="city">Mumbai</div>
+      <div class="time" id="mumbai-time"></div>
+      <div class="date" id="mumbai-date"></div>
+    </div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const zones = [
+        {
+          city: "perth",
+          timezone: "Australia/Perth"
+        },
+        {
+          city: "mumbai",
+          timezone: "Asia/Kolkata"
+        }
+      ];
+
+      zones.forEach(({ city, timezone }) => {
+        const now = new Date();
+
+        document.getElementById(`${city}-time`).textContent =
+          now.toLocaleTimeString("en-AU", {
+            timeZone: timezone,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+          });
+
+        document.getElementById(`${city}-date`).textContent =
+          now.toLocaleDateString("en-AU", {
+            timeZone: timezone,
+            weekday: "short",
+            day: "2-digit",
+            month: "short"
+          });
+      });
+    }
+
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>
