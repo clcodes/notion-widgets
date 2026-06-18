@@ -1,101 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: transparent;
-      color: #222;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    .wrap {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-    }
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: Arial, sans-serif;
+    color: inherit;
+}
 
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 10px 16px;
-      min-width: 150px;
-      text-align: center;
-    }
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 10px;
+}
 
-    .city {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
+.card {
+    text-align: center;
+    background: transparent;
+}
 
-    .time {
-      font-size: 24px;
-      font-weight: 700;
-    }
+.city {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    opacity: 0.7;
+    margin-bottom: 4px;
+}
 
-    .date {
-      font-size: 11px;
-      color: #666;
-      margin-top: 4px;
-    }
-  </style>
+.time {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.date {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
+
+<div class="wrap">
+
     <div class="card">
-      <div class="city">Perth</div>
-      <div class="time" id="perth-time"></div>
-      <div class="date" id="perth-date"></div>
+        <div class="city">PERTH</div>
+        <div class="time" id="perth-time"></div>
+        <div class="date" id="perth-date"></div>
     </div>
 
     <div class="card">
-      <div class="city">Mumbai</div>
-      <div class="time" id="mumbai-time"></div>
-      <div class="date" id="mumbai-date"></div>
+        <div class="city">MUMBAI</div>
+        <div class="time" id="mumbai-time"></div>
+        <div class="date" id="mumbai-date"></div>
     </div>
-  </div>
 
-  <script>
-    function updateTime() {
-      const zones = [
+</div>
+
+<script>
+function updateTime() {
+
+    const locations = [
         {
-          city: "perth",
-          timezone: "Australia/Perth"
+            id: "perth",
+            timezone: "Australia/Perth"
         },
         {
-          city: "mumbai",
-          timezone: "Asia/Kolkata"
+            id: "mumbai",
+            timezone: "Asia/Kolkata"
         }
-      ];
+    ];
 
-      zones.forEach(({ city, timezone }) => {
+    locations.forEach(location => {
+
         const now = new Date();
 
-        document.getElementById(`${city}-time`).textContent =
-          now.toLocaleTimeString("en-AU", {
-            timeZone: timezone,
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false
-          });
+        document.getElementById(location.id + "-time").textContent =
+            now.toLocaleTimeString("en-AU", {
+                timeZone: location.timezone,
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            });
 
-        document.getElementById(`${city}-date`).textContent =
-          now.toLocaleDateString("en-AU", {
-            timeZone: timezone,
-            weekday: "short",
-            day: "2-digit",
-            month: "short"
-          });
-      });
-    }
+        document.getElementById(location.id + "-date").textContent =
+            now.toLocaleDateString("en-AU", {
+                timeZone: location.timezone,
+                weekday: "short",
+                day: "numeric",
+                month: "short"
+            });
 
-    updateTime();
-    setInterval(updateTime, 1000);
-  </script>
+    });
+}
+
+updateTime();
+setInterval(updateTime, 1000);
+</script>
+
 </body>
 </html>
